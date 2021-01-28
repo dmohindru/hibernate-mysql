@@ -1,0 +1,18 @@
+SECTION 2
+---------
+# Query to create database
+create database mydb;
+
+# To use a database
+use mydb;
+
+# Show tables
+show tables;
+
+Important documentation
+-----------------------
+Spring data JPA
+https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#preface
+
+Common Spring boot application properties
+https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties-data
