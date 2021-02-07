@@ -1,5 +1,5 @@
-SECTION 2
----------
+SECTION 2: SOFTWARE SETUP
+-------------------------
 # Query to create database
 create database mydb;
 
@@ -17,8 +17,8 @@ https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#preface
 Common Spring boot application properties
 https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties-data
 
-SECTION 4
----------
+SECTION 4: ORM BASICS
+---------------------
 ORM Basics
 
 Various layers in typical java EE application
@@ -27,8 +27,10 @@ Various layers in typical java EE application
 > Service layer: This layer holds all business logic
 > Data Access layer : Responsible to connect to database and provice database service to service layer 
 
-SECTION 5
----------
+SECTION 5: SIMPLE CRUD OPERATIONS
+---------------------------------
+Project: productdata
+
 # SQL to create table
 use mydb;
 
@@ -37,31 +39,39 @@ create table product(id int PRIMARY KEY, name varchar(20), description varchar(1
 # delete from table
 delete from product where id=1;
 
-SECTION 6
----------
+SECTION 6: GENERATORS
+----------------------
+Project: idgenerators
+
 ID Generation Strategy
 GenerationType.AUTO: Here hibernate will go and check with underlying database what strategy do they support like IDENTITY, SEQUENCE, TABLE
 GenerationType.IDENTITY: Database provider will provide us with generated id value.
 GenerationType.SEQUENCE: Hibernate with will provide with auto incremented sequence. You will have to tell hibernate about the sequence.
 GenerationType.TABLE: Hibernate will generate a special table where it will store generate id value and use as primary key for our main table. For next value generated hibernate will check it first if it exist in table and then proceed accordingly.
 
-SECTION 7
----------
+SECTION 7: SPRING DATA FINDER METHOD
+------------------------------------
+Project: productdata
+
 finder methods
 > findById(int id)
 > findByNameAndEmail(String name, String email)
 > findByEmailLike(String email)
 > findByPriceGreaterThan(double price)
 
-SECTION 8
----------
+SECTION 8: PAGING AND SORTING
+-----------------------------
+Project: productdata
+
 Pageable its as interface for paging request
 PageRequest is an implementation of Pageable interface
 Sort class used for sorting of results
 Order class defines order of result as Ascending or Descending with field names.
 
-SECTION 9
----------
+SECTION 9: JPQL
+---------------
+Project: jpqlandnativesql
+
 Writing JPQL query with @Query annotation on query methods in Entity Repository interface
 e.g.
 @Query("from Student")
@@ -75,15 +85,19 @@ To pass parameters to JPQL query use following syntax
 @Query("from Student where score>:min and score<:max")
 List<Student> findStudentsForGivenScores(@Param("min") int min, @Param("max") int max);
 
-SECTION 10
-----------
+SECTION 10: PAGING AND SORTING WITH JPQL
+----------------------------------------
+Project: jpqlandnativesql
+
 Pass pageable object to finder methods to have pagination and sorting results. e.g.
 
 @Query("from Student")
 List<Student> findAllStudents(Pageable pageable);
 
-SECTION 11
-----------
+SECTION 11: NATIVE SQL QUERY
+----------------------------
+Project: jpqlandnativesql
+
 Write native sql query with following two method syntax
 
 @Query(value="select * from student where fname=:firstName", nativeQuery = true)
@@ -92,8 +106,10 @@ List<Student> findFindFirstnameNQ(@Param("firstName") String firstName);
 @Query(value="select lname, score from student where fname=:firstName", nativeQuery = true)
 List<Object[]> findStudentPartialDataNQ(@Param("firstName") String firstName);
 
-SECTION 12
-----------
+SECTION 12: INHERITANCE MAPPING
+-------------------------------
+Project: hibernateinheritance
+
 Inheritance mapping can be achieved using following techniques
 SINGLE_TABLE
 TABLE_PER_CLASS
@@ -141,8 +157,10 @@ public class CreditCard extends Payment{
 @PrimaryKeyJoinColumn(name="id")
 public class Cheque extends Payment{
 
-SECTION 13
-----------
+SECTION 13: COMPONENT MAPPING
+-----------------------------
+Project: componentmapping
+
 Use @Embedded and @Embeddable  annotation to save an embedded object along with parent object
 
 @Entity
@@ -157,8 +175,10 @@ public class Employee {
 @Embeddable
 public class Address {
 
-SECTION 14
-----------
+SECTION 14: RELATIONSHIP IN HIBERNATE
+--------------------------------------
+Project: associations
+
 cascade = "persist" // An insert operation on main object should be propagated to child object
 cascade = "merge" // An insert or update operation on main object should be propagated to child object
 cascade = "remove" // An remove operation on main object should be propagated to child object
@@ -182,8 +202,9 @@ public class PhoneNumber {
     	private Customer customer;
     	.....
     	
-SECTION 15
-----------
+SECTION 15: MANY TO MANY ASSOCIATION
+------------------------------------
+Project: associations
 
 @Entity
 public class Programmer {
@@ -201,8 +222,10 @@ public class Project {
     	private Set<Programmer> programmers;
 ...
 
-SECTION 16
-----------
+SECTION 16: ONE TO ONE MAPPING
+------------------------------
+Project: associations
+
 Type of One to One associations
 Primary Key association: Bidirectional
 
@@ -228,6 +251,84 @@ public class Licence {
     	private Person person;
 ...
 
-SECTION 17
-----------
+SECTION 17: HIBERNATE CACHING MECHANISM
+---------------------------------------
+Project: productdata
+
+Cache Levels
+Level 1: Session
+In this type a separate cache is maintained for different session that are created for different clients.  
+
+
+Level 2: SessionFactory
+In this type a common cache is maintained which is shared among all sessions
+
+Different type of level 2 caches
+1. ehcache <--- most popular and easy to use
+2. swaram cache
+3. Jboss tree cache
+4. OS cache
+5. Tangosol cache
+
+@Transactional annotation is required for hibernate level 1 cache to work.
+
+Ehcache: 
+1. Fast and light weight.
+2. In memory and disk based.
+3. Can configure Timeout, total life time. 
+
+Steps to configure Ehcache
+1. Add Maven Dependencies
+2. Enable cache for the application
+3. Create ehcache.xml
+4. Make entities cacheable
+5. Test caching 
+
+Cache concurrency strategy
+1. READ_ONLY
+2. NONSTRICT_READ_WRITE
+3. READ_WRITE
+4. TRANSACTIONAL
+
+SECTION 18: TRANSACTION MANAGEMENT
+----------------------------------
+Project: transactionmanagement
+
+Transaction properties
+A : Atomic
+C : Consistent 
+I : Isolation
+D : Durability
+
+Transaction Management Components
+1. Transaction App
+2. Transactional Manager/ Transaction Co-ordinator
+3. Resource Manager
+4. Local Transaction or Distributed Transaction
+
+To make a transaction mark a method with @Transactional annotation
+
+SECTION 19: SAVE AND RETRIEVE FILES
+-----------------------------------
+Project: filedata
+
+To store a file in a database make table which has column as BLOB
+
+To model this in java declare a class with following fields
+@Entity
+class Image {
+@Id
+int id;
+String name;
+@Lob
+byte[] data;
+... // other fields and getters and setters 
+}
+
+To store data into database we can read data into byte array from File and FileInputStream and write it to database.
+
+To generate file from BLOB value from database we can read bytes read from database and write to a file using FileOutputStream 
+
+
+
 

@@ -2,15 +2,19 @@ package dev.dmohindru.springdata.product;
 
 import dev.dmohindru.springdata.product.entities.Product;
 import dev.dmohindru.springdata.product.repos.ProductRepository;
+import org.hibernate.Session;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Transactional;
 
 
+import javax.persistence.EntityManager;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -25,6 +29,9 @@ class ProductdataApplicationTests {
 
 	@Autowired
 	ProductRepository repository;
+
+	@Autowired
+	EntityManager entityManager;
 
 	@Test
 	void contextLoads() {
@@ -140,6 +147,20 @@ class ProductdataApplicationTests {
 
 		Pageable pageable = PageRequest.of(0, 2, Sort.Direction.DESC, "name", "price");
 		repository.findAll(pageable).forEach(p -> System.out.println(p.getName()));
+
+	}
+
+	@Test
+	@Transactional
+	public void testCaching() {
+
+		Session session = entityManager.unwrap(Session.class);
+		Product product = repository.findById(1).get();
+
+		repository.findById(1);
+		session.evict(product);
+		repository.findById(1);
+
 
 	}
 
