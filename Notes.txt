@@ -327,8 +327,78 @@ byte[] data;
 
 To store data into database we can read data into byte array from File and FileInputStream and write it to database.
 
-To generate file from BLOB value from database we can read bytes read from database and write to a file using FileOutputStream 
+To generate file from BLOB value from database we can read bytes read from database and write to a file using FileOutputStream
 
+
+SECTION 20: END TO END MINI PROJECT
+-----------------------------------
+Project: patitentscheduling
+
+
+SECTION 21: WORKING WITH MONGODB
+--------------------------------
+Project: mongodemo
+
+Very Important: Add following annotation to main application class of spring boot application.
+
+@EnableMongoRepositories(basePackageClasses = ProductRepository.class)
+@SpringBootApplication
+public class MongodemoApplication {
+...
+
+
+SECTION 22: COMPOSITE PRIMARY KEY
+---------------------------------
+Project: compositekey
+
+To build composite key follow steps as below.
+Technique 1: Using @IdClass annotations
+--------------------------------------
+1. Create a key class as below
+public class CustomerId implements Serializable {
+    private int id;
+    private String email;
+...
+
+2. Define same of Key class in your main entity class and mark with following annotations
+@Entity
+@IdClass(CustomerId.class)
+public class Customer {
+    @Id
+    private int id;
+    @Id
+    private String email;
+    private String name;
+...
+
+3. Create Repository class as below
+public interface CustomerRepository extends CrudRepository<Customer, CustomerId> { }
+
+Technique 2: Using @Embeddable and @EmbeddedId annotations
+----------------------------------------------------------
+1. Create a key class as @Embeddable
+@Embeddable
+public class CustomerId implements Serializable {
+    private int id;
+    private String email;
+...
+
+2. Declare Key class as a component in main entity class
+@Entity
+public class Customer {
+
+    @EmbeddedId
+    private CustomerId customerId;
+    private String name;
+...
+
+3. 3. Create Repository class as below
+public interface CustomerRepository extends CrudRepository<Customer, CustomerId> { }
+
+
+SECTION 23: CLINICAL DATA COLLECTION AND REPORTING PROJECT
+-----------------------------------------------------------
+Project: clinicalsapi
 
 
 
