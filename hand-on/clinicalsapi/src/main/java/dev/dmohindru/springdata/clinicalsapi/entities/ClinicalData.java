@@ -18,6 +18,7 @@ public class ClinicalData {
     private Timestamp measuredDateTime;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="patient_id", nullable = false)
+    @JsonIgnore
     private Patient patient;
 
     public Long getId() {

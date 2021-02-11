@@ -400,5 +400,36 @@ SECTION 23: CLINICAL DATA COLLECTION AND REPORTING PROJECT
 -----------------------------------------------------------
 Project: clinicalsapi
 
+SECTION 24: DEVELOP REACT FRONT END
+-----------------------------------
+Project: clientsapp
+
+SECTION 25: DEPLOY TO AWS
+-------------------------
+AWS EC2: To run mysql
+S3 Bucket: To deploy spring boot jar file
+
+Basic Step to run a spring boot application with MySQL backend on AWS
+1. Launch a EC2 Instance
+2. Setup Java and MySQL DB
+3. Copy the jar to S3 Bucket
+4. Download jar file from S3 bucket to EC2 instance
+5. Seed mysql database with data
+6. Run as java jar file
+7. Deploy and test
+
+SECTION 26: DOCKERIZE THE CLINICAL APP
+--------------------------------------
+Steps:
+1. Launch MySQL Container
+2. Dockerize Clinical App
+3. Launch App Container and Test
+
+
+
+
+
+ 
+
 
 
